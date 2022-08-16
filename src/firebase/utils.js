@@ -23,10 +23,12 @@ export const handleUserProfile = async (userAuth, additionalData) => {
     const userRef = firestore.doc(`users/${uid}`);
     const snapshot = await userRef.get();
 
+    //check if the user exists
     if(!snapshot.exists) {
         const { displayName, email } = userAuth;
         const timestamp = new Date();
 
+        //if not we will add it to the firestore
         try{
             await userRef.set({
                 displayName,
@@ -38,5 +40,5 @@ export const handleUserProfile = async (userAuth, additionalData) => {
             // console.log(err);
         }
     }
-    return userRef;
+    return userRef;//the id
 }
