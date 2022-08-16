@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import "./styles.scss";
-import { auth, handleUserProfile } from '../../firebase/utils'
+import { auth, handleUserProfile } from "../../firebase/utils";
 import FormInput from "../forms/FormInput";
 import Button from "../forms/Button";
+import AuthWrapper from "../AuthWrapper";
 
 const initialState = {
   displayName: "",
   email: "",
   password: "",
   confirmPassword: "",
-  errors: []
+  errors: [],
 };
 
 class Signup extends Component {
@@ -29,51 +30,49 @@ class Signup extends Component {
     });
   }
 
-  handleFormSubmit = async event => {
+  handleFormSubmit = async (event) => {
     event.preventDefault();
-    const { displayName, email, password, confirmPassword, errors} = this.state;
-    
-    if(password !== confirmPassword) {
-        const err = ['Password Don\'t match'];
-        this.setState({
-            errors: err
-        })
-        return;
+    const { displayName, email, password, confirmPassword, errors } =
+      this.state;
+
+    if (password !== confirmPassword) {
+      const err = ["Password Don't match"];
+      this.setState({
+        errors: err,
+      });
+      return;
     }
 
-    try{
-       const { user } = await auth.createUserWithEmailAndPassword(email, password)
-       await handleUserProfile(user, { displayName}); //displayNmae is the additional data
-        this.setState({
-            ...initialState
-        })
-    
-    } catch(err) {
-        // console.log(err)
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await handleUserProfile(user, { displayName }); //displayNmae is the additional data
+      this.setState({
+        ...initialState,
+      });
+    } catch (err) {
+      // console.log(err)
     }
-}
-
+  };
 
   render() {
     const { displayName, email, password, confirmPassword, errors } = this.state;
-    return (
-      <div className="signup">
-        <div className="wrap">
-          <h2>Signup</h2>
-
-            {errors.length > 0 && (
-                <ul>
-                    {errors.map((err, index) => {
-                        return (
-                            <li key={index}>
-                                {err}
-                            </li>
-                        )
-                    })}
-                </ul>
-            )}
-
-          <div className="formWrap">
+    
+    const configAuthWrapper = {
+      headline: 'Registration'
+    }
+      return (
+      <AuthWrapper {...configAuthWrapper}>
+        <div className="formWrap">
+          {errors.length > 0 && (
+            <ul>
+              {errors.map((err, index) => {
+                return <li key={index}>{err}</li>;
+              })}
+            </ul>
+          )}
           <form onSubmit={this.handleFormSubmit}>
             <FormInput
               type="text"
@@ -107,13 +106,10 @@ class Signup extends Component {
               onChange={this.handleChange}
             />
 
-            <Button type="submit">
-                Register
-            </Button>
+            <Button type="submit">Register</Button>
           </form>
-          </div>
         </div>
-      </div>
+      </AuthWrapper>
     );
   }
 }
