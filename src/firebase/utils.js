@@ -6,6 +6,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { firebaseConfig } from './config';
 
+
 firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
@@ -40,5 +41,6 @@ export const handleUserProfile = async (userAuth, additionalData) => {
             // console.log(err);
         }
     }
+
     return userRef;//the id
 }

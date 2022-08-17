@@ -1,8 +1,8 @@
 import Logo from "../../assets/logo1.png";
 import React from "react";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { auth } from '../../firebase/utils'
+import { auth } from "../../firebase/utils";
 import "./styles.scss";
 
 const Header = (props) => {
@@ -17,12 +17,17 @@ const Header = (props) => {
         </div>
 
         <div className="callToActions">
+          {currentUser && (
+            <ul>
+              <li>
+                <Link to="/dashboard">My Account</Link>
+              </li>
+              <li>
+                <span onClick={() => auth.signOut()}>LOGOUT</span>
+              </li>
+            </ul>
+          )}
 
-          {currentUser && 
-          <ul>
-            <span onClick={()=> auth.signOut()}>LOGOUT</span>
-          </ul>
-          }
           {!currentUser && ( //if the user is not logged in
             <ul>
               <li>
@@ -33,7 +38,6 @@ const Header = (props) => {
               </li>
             </ul>
           )}
-
         </div>
       </div>
     </header>
@@ -44,7 +48,7 @@ Header.defaultProps = {
   currentUser: null,
 };
 
-const mapStateToProps = ( { user }) => ({
-  currentUser: user.currentUser
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
 });
 export default connect(mapStateToProps, null)(Header);
