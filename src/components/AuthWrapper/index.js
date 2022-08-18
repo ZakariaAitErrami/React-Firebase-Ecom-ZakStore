@@ -1,4 +1,5 @@
-import "./styles.scss";
+import React from 'react';
+import './styles.scss';
 
 const AuthWrapper = ({ headline, children }) => {
   return (
@@ -7,13 +8,11 @@ const AuthWrapper = ({ headline, children }) => {
         {headline && <h2>{headline}</h2>}
 
         <div className="children">
-          {/* verify if the children is passes via props */}
           {children && children}
         </div>
       </div>
     </div>
   );
-};
-
+}
 
 export default AuthWrapper;
