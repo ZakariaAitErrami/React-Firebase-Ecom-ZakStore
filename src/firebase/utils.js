@@ -21,12 +21,14 @@ export const handleUserProfile = async ({userAuth, additionalData}) => {
   if (!snapshot.exists) {
     const { displayName, email } = userAuth;
     const timestamp = new Date();
+    const userRoles = ['user'];
 
     try {
       await userRef.set({
         displayName,
         email,
         createdDate: timestamp,
+        userRoles,
         ...additionalData
       });
     } catch(err) {
@@ -45,6 +47,11 @@ export const getCurrentUser = () => {
     }, reject)
   })
 }
+
+
+
+
+
 
 // // import firebase from 'firebase/app';
 // // import 'firebase/firestore';
