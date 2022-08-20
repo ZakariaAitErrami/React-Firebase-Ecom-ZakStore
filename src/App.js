@@ -24,6 +24,7 @@ import Recovery from './pages/Revovery';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import './default.scss';
+import Search from './pages/Search';
 
 const App = props => {
   const dispatch = useDispatch();
@@ -43,6 +44,12 @@ const App = props => {
           </HomepageLayout>
         )}
         />
+        <Route path="/search" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
+  
+        )}/>
         <Route path="/registration" render={() => (
           <MainLayout>
             <Registration />

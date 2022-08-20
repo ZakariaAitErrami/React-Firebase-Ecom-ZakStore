@@ -154,7 +154,7 @@ const Admin = props => {
                             {productName}
                           </td>
                           <td>
-                            £{productPrice}
+                            {productPrice} DHS
                           </td>
                           <td>
                             <Button onClick={() => dispatch(deleteProductStart(documentID))}>
