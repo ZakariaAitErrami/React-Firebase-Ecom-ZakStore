@@ -16,7 +16,7 @@ const Product = ( {
         
         <div className="product">
             <div className="thumb">
-                <img src={productThumbnail} alt ={productName}/>
+                <img src={productThumbnail}  alt ={productName}/>
 
             </div>
 
