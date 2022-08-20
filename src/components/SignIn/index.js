@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { emailSignInStart, gooleSignInStart } from '../../redux/User/user.actions';
+import { emailSignInStart, googleSignInStart } from './../../redux/User/user.actions';
 
 import './styles.scss';
 
-import AuthWrapper from '../AuthWrapper';
-import FormInput from '../forms/FormInput';
-import Button from '../forms/Button';
+import AuthWrapper from './../AuthWrapper';
+import FormInput from './../forms/FormInput';
+import Button from './../forms/Button';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser
@@ -17,7 +17,6 @@ const SignIn = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentUser } = useSelector(mapState);
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
 
@@ -40,7 +39,7 @@ const SignIn = props => {
   }
 
   const handleGoogleSignIn = () => {
-    dispatch(gooleSignInStart());
+    dispatch(googleSignInStart());
   }
 
   const configAuthWrapper = {
@@ -74,8 +73,7 @@ const SignIn = props => {
 
           <div className="socialSignin">
             <div className="row">
-            {/* user.actions */}
-              <Button onClick={handleGoogleSignIn}> 
+              <Button onClick={handleGoogleSignIn}>
                 Sign in with Google
               </Button>
             </div>

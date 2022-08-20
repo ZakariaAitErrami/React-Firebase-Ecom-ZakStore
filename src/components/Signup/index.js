@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { signUpUserStart } from '../../redux/User/user.actions';
+import { signUpUserStart } from './../../redux/User/user.actions';
 import './styles.scss';
 
-import AuthWrapper from '../AuthWrapper';
-import FormInput from '../forms/FormInput';
-import Button from '../forms/Button';
+import AuthWrapper from './../AuthWrapper';
+import FormInput from './../forms/FormInput';
+import Button from './../forms/Button';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -17,7 +17,6 @@ const Signup = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentUser, userErr } = useSelector(mapState);
-  
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

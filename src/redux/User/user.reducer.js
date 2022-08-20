@@ -6,31 +6,30 @@ const INITIAL_STATE = {
   userErr: []
 };
 
-const userReducer = (state=INITIAL_STATE, action) => {
-  switch(action.type) {
+const userReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
     case userTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
         currentUser: action.payload,
-        userErr: [] //no error if he success sign in
+        userErr: []
       }
-      
-      case userTypes.RESET_PASSWORD_SUCCESS:
-        return{
-          ...state,
-          resetPasswordSuccess: action.payload
-        }
-      case userTypes.userErr:
-        return{
-          ...state,
-          userErr: action.payload
-        }
-        case userTypes.RESET_USER_STATE:
-      case userTypes.SIGN_OUT_USER_SUCCESS:
-        return{
-          ...state,
-          ...INITIAL_STATE
-        }
+    case userTypes.RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        resetPasswordSuccess: action.payload
+      }
+    case userTypes.USER_ERROR:
+      return {
+        ...state,
+        userErr: action.payload
+      }
+    case userTypes.RESET_USER_STATE:
+    case userTypes.SIGN_OUT_USER_SUCCESS:
+      return {
+        ...state,
+        ...INITIAL_STATE
+      }
     default:
       return state;
   }

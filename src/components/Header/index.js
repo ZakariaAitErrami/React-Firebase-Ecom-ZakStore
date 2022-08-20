@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { signOutUserStart } from '../../redux/User/user.actions'
+import { signOutUserStart } from './../../redux/User/user.actions';
 import './styles.scss';
 import { Link } from 'react-router-dom';
 
-import Logo from '../../assets/logo.png';
+import Logo from './../../assets/logo.png';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser
@@ -16,7 +16,8 @@ const Header = props => {
 
   const signOut = () => {
     dispatch(signOutUserStart());
-  }
+  };
+
   return (
     <header className="header">
       <div className="wrap">

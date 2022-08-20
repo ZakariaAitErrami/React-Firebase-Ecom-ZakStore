@@ -8,8 +8,8 @@ const mapState = ({ user }) => ({
 
 const useAuth = props => {
   const { currentUser } = useSelector(mapState);
-  const history = useHistory()
-;
+  const history = useHistory();
+
   useEffect(() => {
     if (!currentUser) {
       history.push('/login');
