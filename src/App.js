@@ -23,6 +23,7 @@ import Login from './pages/Login';
 import Recovery from './pages/Revovery';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import ProductDetails from './pages/ProductDetails';
 import './default.scss';
 import Search from './pages/Search';
 
@@ -52,6 +53,11 @@ const App = props => {
         <Route path="/search/:filterType" render={() => (
           <MainLayout>
             <Search />
+          </MainLayout>
+        )}/>
+        <Route path="/product/:productID" render={() => (
+          <MainLayout>
+            <ProductDetails />
           </MainLayout>
         )}/>
         <Route path="/registration" render={() => (
