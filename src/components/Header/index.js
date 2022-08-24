@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUserStart } from './../../redux/User/user.actions';
 import './styles.scss';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { selectCartItemsCount } from '../../redux/Cart/cart.selectors'
 import Logo from './../../assets/logo.png';
 
@@ -12,12 +12,18 @@ const mapState = (state) => ({
 });
 
 const Header = props => {
+  const location = useLocation();
+  const [activeMenu, setActiveMenu] = useState(false);
   const dispatch = useDispatch();
   const { currentUser, totalNumberCartItems } = useSelector(mapState);
 
   const signOut = () => {
     dispatch(signOutUserStart());
   };
+
+  useEffect(() => {
+    setActiveMenu(false);
+  }, [location]);
 
   return (
     <header className="header">
@@ -28,7 +34,7 @@ const Header = props => {
           </Link>
         </div>
 
-        <nav>
+        <nav className={`mainMenu ${activeMenu ? 'active' : ''}`}>
           <ul>
             <li>
               <Link to="/">
@@ -48,33 +54,44 @@ const Header = props => {
             <li>
               <Link to="/cart">
                 Your Cart ({totalNumberCartItems})
+                <i class="fas fa-shopping-basket"></i>
               </Link>
             </li>
             {currentUser && [
-                <li>
+                <li key={1}>
                   <Link to="/dashboard">
                     My Account
+                    <i class="fas fa-user-circle"></i>
                   </Link>
                 </li>,
-                <li>
+                <li key={2}>
                   <span onClick={() => signOut()}>
                     LogOut
+                    <i class="fas fa-sign-out-alt"></i>
                   </span>
                 </li>
             ]}
           
             {!currentUser && [
-                <li>
+                <li key={1} className="hideOnMobile">
                   <Link to="/registration">
                     Register
                 </Link>
                 </li>,
-                <li>
+                <li key={2}>
                   <Link to="/login">
                     Login
+                    <i class="fas fa-user-circle"></i>
                 </Link>
                 </li>
             ]}
+
+            <li className="mobileMenu">
+              <span onClick={() => setActiveMenu(!activeMenu)}>
+                <i className="fas fa-bars"></i>
+              </span>
+            </li>
+
           </ul>
 
         </div>

@@ -43,7 +43,7 @@ const Item = (product) => {
                         {productPrice} DHS
                     </td>
                     <td align="center">
-                        <span className="cartBtn" onClick={()=> handleRemoveCartItem(documentID) }>
+                        <span className="cartBtn remove" onClick={()=> handleRemoveCartItem(documentID) }>
                             X
                         </span>
                     </td>
