@@ -4,7 +4,8 @@ import FormInput from "../forms/FormInput";
 import Button from "../forms/Button";
 import { CountryDropdown } from "react-country-region-selector";
 import { apiInstance } from '../../Utils';
-import { selectCartTotal, selectCartItemsCount } from '../../redux/Cart/cart.selectors'
+import { selectCartTotal, selectCartItemsCount, selectCartItems } from '../../redux/Cart/cart.selectors'
+import { saveOrderHistory } from '../../redux/Orders/orders.actions'
 import { clearCart } from '../../redux/Cart/cart.actions'
 import { createStructuredSelector } from 'reselect';
 import { useSelector, useDispatch } from "react-redux";
@@ -22,14 +23,15 @@ const initialAddressState = {
 
 const mapState = createStructuredSelector({
     total: selectCartTotal,
-    itemCount: selectCartItemsCount
+    itemCount: selectCartItemsCount,
+    cartItems: selectCartItems
 })
 
 const PaymentDetails = () => {
   const stripe = useStripe();
   const elements = useElements();
   const history = useHistory();
-  const {total, itemCount} = useSelector(mapState);
+  const {total, itemCount, cartItems} = useSelector(mapState);
   const dispatch = useDispatch();
   const [billingAddress, setBillingAddress] = useState({
     ...initialAddressState,
@@ -42,7 +44,7 @@ const PaymentDetails = () => {
   
   useEffect(()=>{
     if(itemCount < 1){
-      history.push('/')
+      history.push('/dashboard')
     }
   },[itemCount])
 
@@ -101,9 +103,25 @@ const PaymentDetails = () => {
                 payment_method: paymentMethod.id
             })
             .then(( { paymentIntent }) => {
+              const configOrder = {
+                orderTotal: total,
+                orderItems: cartItems.map(item => {
+                  const { documentID, productThumbnail, 
+                    productName, productPrice, quantity} = item;
+
+                    return{
+                      documentID,
+                      productThumbnail,
+                      productName,
+                      productPrice,
+                      quantity
+                    };
+
+                })
+              }
                 dispatch(
-                  clearCart()
-                )
+                  saveOrderHistory(configOrder)
+                );
             })
         })
     })
